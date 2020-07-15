@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Exo+2&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<nav class="navbar  navbar-light bg-light justify-content-center">
+    <a class="navbar-brand text-primary" th:href="@{movies}">Movies HUB</a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+
+        </ul>
+    </div>
+
+</nav>
+
+<div style="margin-left:80px;">
+    <section layout:fragment="content">
+    </section>
+</div>
+
+</body>
+</html>

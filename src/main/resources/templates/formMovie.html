@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="admin">
+<head>
+    <meta charset="UTF-8">
+    <title>Ville - Admin</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card py-4 my-4" style="border-radius: 25px">
+                    <div class="card-body">
+                        <h3 class="card-title text-muted " th:if="${movie.id==null}">Ajouter un Film</h3>
+                        <h3 class="card-title text-muted " th:if="${movie.id!=null}">Mettre à jour un Film</h3>
+                        <hr class="mb-1"/>
+                        <form class="mt-3" th:action="@{saveMovie}" method="post">
+                            <div class="form-group">
+                                <label class="control-label">ID : </label>
+                                <label class="control-label" th:if="${movie.id!=null}"  th:text="${movie.id}"></label>
+                                <label class="control-label" th:if="${movie.id==null}">To Be Generated</label>
+                                <input type="hidden" name="id" class="form-control" style="border-radius: 25px" th:value="${movie.id}">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Movie ID : </label>
+                                <input type="text" name="movieId" class="form-control" th:value="${movie.movieId}"
+                                       style="border-radius: 25px">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Title : </label>
+                                <input type="text" name="title" class="form-control" th:value="${movie.title}"
+                                       style="border-radius: 25px">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Genres : </label>
+                                <input type="text"  name="genres" class="form-control"
+                                       th:value="${movie.genres}" style="border-radius: 25px">
+                            </div>
+
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <button align="center" class="btn btn-outline-primary" style="border-radius: 25px"
+                                                type="submit">Enregistrer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

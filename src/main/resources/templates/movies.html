@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="admin">
+<head>
+    <title>Movies</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container justify-content-center mt-3">
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="card" style="border-radius: 25px">
+                    <div class="card-body">
+                        <h5 class="display-4 mx-4 mb-4">Movies</h5>
+                        <hr class="mb-5"/>
+                        <form class="form-inline" th:action="@{movies}" method="get">
+                            <input class="form-control mr-sm-2" type="text" name="title" style="border-radius: 25px"
+                                   th:value="${title}" placeholder="Search by title">
+                            <button class="btn btn-outline-primary my-2 my-sm-0" style="border-radius: 25px"
+                                    type="submit">
+                                Search
+                            </button>
+                            <label style="margin-left: 2mm; font-weight: bold">Nb. Movies : </label>
+                            <label style="margin-left: 4mm; " th:text="${result}"></label>
+                        </form>
+                        <div class="container mt-3">
+                            <table class="table table-hover" style="border-radius: 20px" id="table">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Genres</th>
+                                    <th colspan="2" class="text-center text-muted">Operations</th>
+                                </tr>
+                                <tr th:each="m:${movieList}">
+                                    <td th:text="${m.movieId}"></td>
+                                    <td th:text="${m.title}"></td>
+                                    <td th:text="${m.genres}"></td>
+
+                                    <td>
+                                        <form th:action="@{deleteMovie}" method="post">
+                                            <input type="hidden" name="id" th:value="${m.id}"/>
+                                            <input type="hidden" name="page" th:value="${currentPage}"/>
+                                            <input type="hidden" name="title" th:value="${title}"/>
+                                            <input type="hidden" name="size" th:value="${size}"/>
+                                            <button type="submit" style="border-radius: 25px"
+                                                    class="btn btn-outline-danger">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{editMovie(id=${m.id})}" style="border-radius: 25px"
+                                           class="btn btn-outline-warning">Update</a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <a th:href="@{formMovie}" style="border-radius: 25px"
+                               class="btn btn-block btn-outline-success mb-3">Add</a>
+                        </div>
+                        <ul class="nav nav-pills justify-content-center">
+                            <li th:each="page,status:${pages}">
+                                <a style="border-radius: 50px"
+                                   th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
+                                   th:href="@{movies(page=${status.index},size=${size},title=${title})}"
+                                   th:text="${status.index}+1">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
