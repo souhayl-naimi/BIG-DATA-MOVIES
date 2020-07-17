@@ -23,8 +23,8 @@
                                         <th>Percentage</th>
                                     </tr>
                                     <tr th:each="s:${stats.entrySet()}" >
-                                        <td th:text="${s.getValue()}"></td>
-                                        <td th:text="${s.getKey()+'%'}"></td>
+                                        <td th:text="${s.getKey()}"></td>
+                                        <td th:text="${s.getValue()+'%'}"></td>
                                     </tr>
                                 </table>
                             </div>

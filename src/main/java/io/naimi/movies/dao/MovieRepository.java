@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public interface MovieRepository extends MongoRepository<Movie, String> {
         public Page<Movie> findByTitleContainsIgnoreCase(String title, Pageable pageable);
         public ArrayList<String> findByGenresContainsIgnoreCase(String cat);
+        public ArrayList<String> findByGenres(String cat);
 
 
 }

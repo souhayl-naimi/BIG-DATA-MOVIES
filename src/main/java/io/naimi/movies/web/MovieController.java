@@ -90,15 +90,14 @@ public class MovieController {
 
         double totalMovies = movieRepository.findAll().size();
         int totalCategories = categories.size();
-
         categories.forEach(categorie->{
-            double totalByCategory =  movieRepository.findByGenresContainsIgnoreCase(categorie).size();
+            double totalByCategory =  movieRepository.findByGenres(categorie).size();
             double percentage = (totalByCategory / totalMovies ) * 100;
             percents.add(percentage);
         });
-        Map<Double,String> stats = new TreeMap<>();
+        Map<String,Double> stats = new TreeMap<>();
         for(int i=0;i<categories.size();i++){
-            stats.put(percents.get(i),categories.get(i));
+            stats.put(categories.get(i),percents.get(i));
         }
         model.addAttribute("stats",stats);
         model.addAttribute("totalCategories",totalCategories);
