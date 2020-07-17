@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -34,6 +34,7 @@ public class MovieController {
                          @RequestParam(name = "size", defaultValue = "100") int size,
                          @RequestParam(name = "title", defaultValue = "") String title) {
 
+       // Page<Movie> moviePage = movieRepository.findByGenresContainsIgnoreCase(title,PageRequest.of(page,size));
         Page<Movie> moviePage = movieRepository.findByTitleContainsIgnoreCase(title,PageRequest.of(page,size));
         //Page<Movie> moviePage = movieRepository.findAll(PageRequest.of(page,size));
         model.addAttribute("result", moviePage.getTotalElements());
@@ -42,6 +43,8 @@ public class MovieController {
         model.addAttribute("currentPage", page);
         model.addAttribute("title", title);
         model.addAttribute("size", size);
+
+
         return "movies";
     }
 
@@ -73,4 +76,34 @@ public class MovieController {
         return "confirmationMovie";
 
     }
+
+    @RequestMapping(value = "/categories")
+    public String categories(Model model){
+        List<String> categories = new ArrayList<String>();List<Double> percents = new ArrayList<>();
+        movieRepository.findAll().forEach(movie -> {
+            String category = movie.getGenres();
+            categories.add(category);
+        });
+        Set<String> uniqueCategories = new HashSet<>(categories);
+        categories.clear();
+        categories.addAll(uniqueCategories);
+
+        double totalMovies = movieRepository.findAll().size();
+        int totalCategories = categories.size();
+
+        categories.forEach(categorie->{
+            double totalByCategory =  movieRepository.findByGenresContainsIgnoreCase(categorie).size();
+            double percentage = (totalByCategory / totalMovies ) * 100;
+            percents.add(percentage);
+        });
+        Map<Double,String> stats = new TreeMap<>();
+        for(int i=0;i<categories.size();i++){
+            stats.put(percents.get(i),categories.get(i));
+        }
+        model.addAttribute("stats",stats);
+        model.addAttribute("totalCategories",totalCategories);
+        return "categories";
+    }
+
+
 }
